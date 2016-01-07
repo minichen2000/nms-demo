@@ -35,7 +35,7 @@
 .ps-container .ps-scrollbar-y-rail {
     position: absolute; /* please don't change 'position' */
     right: 0px; /* there must be 'right' for ps-scrollbar-y-rail */
-    width: 8px;
+    width: 9px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
@@ -70,7 +70,7 @@
     position: absolute; /* please don't change 'position' */
     bottom: 0; /* there must be 'bottom' for ps-scrollbar-x */
     height: 8px;
-    background-color: #aaa;
+    background-color: #ccc;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
@@ -86,14 +86,14 @@
 
 .ps-container .ps-scrollbar-x-rail:hover .ps-scrollbar-x,
 .ps-container .ps-scrollbar-x-rail.hover .ps-scrollbar-x {
-    background-color: #999;
+    background-color: #ccc;
 }
 
 .ps-container .ps-scrollbar-y {
     position: absolute; /* please don't change 'position' */
     right: 0; /* there must be 'right' for ps-scrollbar-y */
-    width: 8px;
-    background-color: #aaa;
+    width: 9px;
+    background-color: #ccc;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
@@ -109,7 +109,7 @@
 
 .ps-container .ps-scrollbar-y-rail:hover .ps-scrollbar-y,
 .ps-container .ps-scrollbar-y-rail.hover .ps-scrollbar-y {
-    background-color: #999;
+    background-color: #ccc;
 }
 
 .ps-container.ie .ps-scrollbar-x,
