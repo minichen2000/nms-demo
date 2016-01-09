@@ -1,6 +1,6 @@
 <div id="wrapper">
 
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="treeController as tc">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">
 					NMS Demo v1.0
@@ -50,13 +50,20 @@
         </ul>
         <!-- /.navbar-top-links -->
 
-        <maintree ne-tree-data="tc.neTreeData" map-tree-data="tc.mapTreeData" tl-tree-data="tc.tlTreeData" trail-tree-data="tc.trailTreeData"
-        path-tree-data="tc.pathTreeData" evc-tree-data="tc.evcTreeData" left-tree-changed="tc.leftTreeChanged"></maintree>
-
+        <maintree ne-tree-data="vm.neTreeData" map-tree-data="vm.mapTreeData" tl-tree-data="vm.tlTreeData" trail-tree-data="vm.trailTreeData"
+        path-tree-data="vm.pathTreeData" evc-tree-data="vm.evcTreeData" left-tree-changed="vm.leftTreeChanged" tree-item-clicked="vm.treeItemClicked">
+        </maintree>
+        <!--1
+        {{neData}}
+        {{vm.neTreeData.name}}
+        2-->
 
         <!-- /.navbar-static-side -->
     </nav>
+
     <div id="page-wrapper" style="min-height: 580px;">
+        <div ui-view>
+        </div>
     </div>
 
 </div>

@@ -1,20 +1,8 @@
 'use strict';
 
-/* App Module */
+/* App Module Creation*/
 
-var nmsdemoApp = angular.module('nmsdemoApp', [
-    'nmsdemoControllers',
-    'treeDirectives',
+angular.module('nmsdemoApp', [
     'perfect_scrollbar',
     'ui.router'
 ]);
-nmsdemoApp.config(['$stateProvider', '$urlRouterProvider',
-function ($stateProvider) {
-
-    // Now set up the states
-    $stateProvider
-        .state('main', {
-            url: "/main",
-            templateUrl: "partials/main.html"
-        });
-}]);
