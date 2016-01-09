@@ -6,8 +6,8 @@
 
 angular
     .module('nmsdemoApp')
-    .controller('TreeController', ['$state', TreeController]);
-
+    .controller('TreeController', TreeController);
+TreeController.$inject=['$state'];
 function TreeController($state) {
     var vm = this;
     vm.neTreeData = neData;
@@ -24,10 +24,13 @@ function TreeController($state) {
     };
 }
 
+
+
 angular
     .module('nmsdemoApp')
-    .controller('TreeItemDetailsController', ['$stateParams', TreeItemDetailsController]);
+    .controller('TreeItemDetailsController', TreeItemDetailsController);
 
+TreeItemDetailsController.$inject=['$stateParams'];
 function TreeItemDetailsController($stateParams) {
     var vm = this;
     vm.message=$stateParams.treeItemName;
