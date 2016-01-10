@@ -6,6 +6,23 @@
 
 angular
     .module('nmsdemoApp')
+    .controller('LoginController', LoginController);
+LoginController.$inject=['$state', 'loginService'];
+function LoginController($state, loginService) {
+    var vm = this;
+    vm.username="";
+    vm.password="";
+    vm.login = login;
+
+    function login() {
+        loginService.setUsername(vm.username);
+        loginService.setPassword(vm.password);
+        $state.go('main');
+    }
+}
+
+angular
+    .module('nmsdemoApp')
     .controller('TreeController', TreeController);
 TreeController.$inject=['$state'];
 function TreeController($state) {
