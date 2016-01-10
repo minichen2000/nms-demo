@@ -28,11 +28,21 @@ function TreeController($state) {
 
 angular
     .module('nmsdemoApp')
-    .controller('TreeItemDetailsController', TreeItemDetailsController);
+    .controller('TreeItemDetailsMiddleController', TreeItemDetailsMiddleController);
 
-TreeItemDetailsController.$inject=['$stateParams'];
-function TreeItemDetailsController($stateParams) {
+TreeItemDetailsMiddleController.$inject=['$stateParams'];
+function TreeItemDetailsMiddleController($stateParams) {
     var vm = this;
     vm.message=$stateParams.treeItemName;
-    //vm.message='bbb';
+}
+
+
+angular
+    .module('nmsdemoApp')
+    .controller('TreeItemDetailsOperationController', TreeItemDetailsOperationController);
+
+TreeItemDetailsOperationController.$inject=['$stateParams'];
+function TreeItemDetailsOperationController($stateParams) {
+    var vm = this;
+    vm.message=$stateParams.treeItemName;
 }

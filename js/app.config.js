@@ -16,9 +16,19 @@ angular
                 })
                 .state('main.treeitem', {
                     url: "/treeitem:treeItemName",
-                    templateUrl: "partials/treeitemdetails.html",
-                    controller: 'TreeItemDetailsController',
-                    controllerAs: 'vm'
+                    views: {
+                        "middleView": {
+                            templateUrl: "partials/treeitemdetailsmiddle.html",
+                            controller: 'TreeItemDetailsMiddleController',
+                            controllerAs: 'vm'
+                        },
+                        "operationView": {
+                            templateUrl: "partials/treeitemdetailsoperation.html",
+                            controller: 'TreeItemDetailsOperationController',
+                            controllerAs: 'vm'
+                        }
+                    }
+
                 });
         }]);
 

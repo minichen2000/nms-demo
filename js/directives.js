@@ -11,6 +11,7 @@ angular
                 restrict: 'AE',
                 scope: {
                     treeItemData: '=',
+                    treeItemLevel: '=',
                     leftTreeChanged: '=',
                     treeItemClicked: '='
                 },
