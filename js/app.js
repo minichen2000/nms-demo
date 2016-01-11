@@ -1,9 +1,8 @@
 'use strict';
 
-/* App Module */
+/* App Module Creation*/
 
-var nmsdemoApp = angular.module('nmsdemoApp', [
-  'nmsdemoControllers',
-  'treeDirectives',
-  'perfect_scrollbar'
+angular.module('nmsdemoApp', [
+    'perfect_scrollbar',
+    'ui.router'
 ]);
