@@ -7,8 +7,8 @@
 angular
     .module('nmsdemoApp')
     .factory('loginService', loginService);
-loginService.$inject = ['$http', '$q', '$timeout', 'logger'];
-function loginService($http, $q, $timeout, logger) {
+loginService.$inject = ['$http', '$q', '$timeout', 'logger', 'statasticService'];
+function loginService($http, $q, $timeout, logger, statasticService) {
     var isLogined = false;
     var username = "";
     var password = "";
@@ -17,15 +17,21 @@ function loginService($http, $q, $timeout, logger) {
         setUsername: setUsername,
         setPassword: setPassword,
         setLoginProgressCB: setLoginProgressCB,
-        loginStep1: loginStep1,
+        /*loginStep1: loginStep1,
         loginStep2: loginStep2,
         loginStep3: loginStep3,
         loginStep4: loginStep4,
-        loginStep5: loginStep5,
+        loginStep5: loginStep5,*/
+
+        logined: logined,
 
         login: login,
         logout: logout,
-        logined: logined
+        retrieveNEs: retrieveNEs,
+        retrieveNEGroups: retrieveNEGroups,
+        retrieveAlarmStatastic: retrieveAlarmStatastic
+
+
     };
 
     function setUsername(u) {
@@ -45,7 +51,7 @@ function loginService($http, $q, $timeout, logger) {
 
 
     function login() {
-        var progress=40;
+        var progress = 70;
         logger.log("Username:" + username);
         logger.log("Password:" + password);
         if (lpcb) {
@@ -53,53 +59,50 @@ function loginService($http, $q, $timeout, logger) {
         }
 
 
-        return $http.post('/login', { u: username, p: password })
+        return $http.get('/server/login.json')
             .then(loginOK)
             .catch(loginKO);
 
 
         function loginOK(rsp) {
-            if (rsp.rlt.toLowerCase() == "ok") {
+            if (rsp.data.rlt.toLowerCase() == "ok") {
                 logger.log("loginOK: " + rsp.rlt);
                 isLogined = true;
 
                 if (lpcb) {
-                    lpcb(false, progress, "用户" + username +"登录成功");
+                    lpcb(true, progress, "用户" + username + "登录成功");
                 }
-            }else{
+            } else {
                 return loginKO(rsp);
             }
         }
         function loginKO(rsp) {
             logger.error("loginKO: " + rsp);
             if (lpcb) {
-                lpcb(false, progress, "用户" + username +"登录失败");
+                lpcb(false, progress, "用户" + username + "登录失败");
             }
             return $q.reject(rsp);
         }
     }
-    
-    
+
+
     function retrieveNEs() {
-        var progress=60;
+        var progress = 80;
         if (lpcb) {
             lpcb(true, progress, "获取网元列表...");
         }
 
 
-        return $http.post('/retrieve_nes',{})
+        return $http.get('/server/retrieve_nes.json')
             .then(OK)
             .catch(KO);
 
 
         function OK(rsp) {
-            if (rsp.rlt.toLowerCase() == "ok") {
-                logger.log("retrieveNEsOK");
-                if (lpcb) {
-                    lpcb(false, progress, "获取网元列表成功");
-                }
-            }else{
-                return KO(rsp);
+            logger.log("retrieveNEsOK");
+            statasticService.setNEList(rsp.data.rlt);
+            if (lpcb) {
+                lpcb(true, progress, "获取网元列表成功");
             }
         }
         function KO(rsp) {
@@ -110,9 +113,65 @@ function loginService($http, $q, $timeout, logger) {
             return $q.reject(rsp);
         }
     }
+    
+    function retrieveNEGroups() {
+        var progress = 90;
+        if (lpcb) {
+            lpcb(true, progress, "获取网元组列表...");
+        }
 
 
-    function loginStep1() {
+        return $http.get('/server/retrieve_negroups.json')
+            .then(OK)
+            .catch(KO);
+
+
+        function OK(rsp) {
+            logger.log("retrieveNEGroupsOK");
+            statasticService.setNEGroupList(rsp.data.rlt);
+            if (lpcb) {
+                lpcb(true, progress, "获取网元组列表成功");
+            }
+        }
+        function KO(rsp) {
+            logger.error("retrieveNEGroupsKO");
+            if (lpcb) {
+                lpcb(false, progress, "获取网元组列表失败");
+            }
+            return $q.reject(rsp);
+        }
+    }
+
+    function retrieveAlarmStatastic() {
+        var progress = 99;
+        if (lpcb) {
+            lpcb(true, progress, "获取告警统计...");
+        }
+
+
+        return $http.get('/server/retrieve_alarm_statastic.json')
+            .then(OK)
+            .catch(KO);
+
+
+        function OK(rsp) {
+            logger.log("retrieveAlarmStatasticOK");
+            statasticService.setAlarmSt(rsp.data.rlt);
+            if (lpcb) {
+                lpcb(true, progress, "获取告警统计成功");
+            }
+        }
+        function KO(rsp) {
+            logger.error("retrieveAlarmStatasticKO");
+            if (lpcb) {
+                lpcb(false, progress, "获取告警统计失败");
+            }
+            return $q.reject(rsp);
+        }
+    }
+
+
+    /*function loginStep1() {
         return loginStep("用户" + username + "验证", 1000, 40, 60, true);
     }
     function loginStep2() {
@@ -155,7 +214,7 @@ function loginService($http, $q, $timeout, logger) {
 
         }, dur);
         return defer.promise;
-    }
+    }*/
 
 
 

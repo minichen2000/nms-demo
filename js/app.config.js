@@ -14,11 +14,10 @@ angular
                     controller: 'TreeController',
                     controllerAs: 'vm',
                     resolve: {
-                        loginStep1: ['loginService', function (loginService) {return loginService.loginStep1()}],
-                        loginStep2: ['loginService','loginStep1', function (loginService, loginStep1) {return loginService.loginStep2()}],
-                        loginStep3: ['loginService','loginStep2', function (loginService, loginStep2) {return loginService.loginStep3()}],
-                        loginStep4: ['loginService','loginStep3', function (loginService, loginStep3) {return loginService.loginStep4()}],
-                        loginStep5: ['loginService','loginStep4', function (loginService, loginStep4) {return loginService.loginStep5()}]
+                        login: ['loginService', function (loginService) {return loginService.login()}],
+                        retrieveNEGroups: ['loginService','login', function (loginService, login) {return loginService.retrieveNEGroups()}],
+                        retrieveNEs: ['loginService','retrieveNEGroups', function (loginService, retrieveNEGroups) {return loginService.retrieveNEs()}],
+                        retrieveAlarmStatastic: ['loginService','retrieveNEs', function (loginService, retrieveNEs) {return loginService.retrieveAlarmStatastic()}] 
                     }
                 })
                 .state('main.treeitem', {

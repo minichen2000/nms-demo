@@ -60,15 +60,16 @@
 
         <!-- /.navbar-static-side -->
     </nav>
-    <div id="middle-page-wrapper" >
+    <div id="middle-page-wrapper">
+         <nvd3 options="vm.options" data="vm.data"></nvd3>
         <div ui-view="middleView">
         </div>
     </div>
-    <div id="operation-page-wrapper" >
+    <div id="operation-page-wrapper">
         <div ui-view="operationView">
         </div>
     </div>
 
-    
+
 
 </div>

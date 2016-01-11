@@ -4,5 +4,6 @@
 
 angular.module('nmsdemoApp', [
     'perfect_scrollbar',
-    'ui.router'
+    'ui.router',
+    'nvd3'
 ]);
