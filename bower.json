@@ -12,7 +12,8 @@
     "angular-ui-router": "0.2.15",
     "angular-resource": "1.5.0-rc.0",
     "angular-animate": "1.5.0-rc.0",
-    "font-awesome": "4.5.0"
+    "font-awesome": "4.5.0",
+    "angular-bootstrap": "0.14.3"
   },
   "resolutions": {
     "font-awesome": "4.5.0"

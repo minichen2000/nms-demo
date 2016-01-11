@@ -23,8 +23,8 @@
     <script src="js/controllers.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/angular_perfect_scrollbar.js"></script>
-    
-    
+
+
 </head>
 
 <body>
@@ -47,11 +47,25 @@
                                     </div>
 
                                     <!-- Change this to a button or input when using this as a form -->
-                                    <a class="btn btn-lg btn-success btn-block" ng-click="vm.login()">登录</a>
+                                    <a class="btn btn-lg btn-success btn-block" ng-click="vm.login()"
+                                    ng-disabled="vm.loginInprogress">登录</a>
                                 </fieldset>
                             </form>
+                            <div class="progress progress-striped loginprogressbar"
+                            ng-class="{'active': vm.loginInprogress}"
+                            ng-if="vm.loginProgress!=100">
+                                <div class="progress-bar progress-bar-info" 
+                                ng-class="{'progress-bar-success': vm.loginInprogress||vm.loginOK, 'progress-bar-danger': !vm.loginInprogress && !vm.loginOK}"
+                                role="progressbar" aria-valuenow="{{vm.loginProgress}}" aria-valuemin="0" aria-valuemax="100"
+                                style="min-width: 40%; width: {{vm.loginProgress}}%;">
+                                    <span >{{vm.loginStepInfo}}</span>
+                                </div>
+                                
+                            </div>
+                            
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

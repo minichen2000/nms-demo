@@ -14,16 +14,11 @@ angular
                     controller: 'TreeController',
                     controllerAs: 'vm',
                     resolve: {
-                        waitLogin: ['loginService', 'logger', function (loginService, logger) {
-                               return loginService.login()
-                               .then(function(data){
-                                   logger.log("loginService.login(): then");
-                                   return data;
-                               })
-                               .catch(function(data){
-                                   logger.log("loginService.login(): catch");
-                               });
-                        }]
+                        loginStep1: ['loginService', function (loginService) {return loginService.loginStep1()}],
+                        loginStep2: ['loginService','loginStep1', function (loginService, loginStep1) {return loginService.loginStep2()}],
+                        loginStep3: ['loginService','loginStep2', function (loginService, loginStep2) {return loginService.loginStep3()}],
+                        loginStep4: ['loginService','loginStep3', function (loginService, loginStep3) {return loginService.loginStep4()}],
+                        loginStep5: ['loginService','loginStep4', function (loginService, loginStep4) {return loginService.loginStep5()}]
                     }
                 })
                 .state('main.treeitem', {
