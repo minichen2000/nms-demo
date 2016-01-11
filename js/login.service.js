@@ -22,7 +22,7 @@ function loginService($http, $q, $timeout, logger) {
         loginStep3: loginStep3,
         loginStep4: loginStep4,
         loginStep5: loginStep5,
-        
+
         login: login,
         logout: logout,
         logined: logined
@@ -45,10 +45,11 @@ function loginService($http, $q, $timeout, logger) {
 
 
     function login() {
+        var progress=40;
         logger.log("Username:" + username);
         logger.log("Password:" + password);
         if (lpcb) {
-            lpcb(true, 40, "用户" + username + "验证中...");
+            lpcb(true, progress, "用户" + username + "验证中...");
         }
 
 
@@ -58,20 +59,55 @@ function loginService($http, $q, $timeout, logger) {
 
 
         function loginOK(rsp) {
-            logger.log("loginOK: " + rsp.data);
-            isLogined = true;
+            if (rsp.rlt.toLowerCase() == "ok") {
+                logger.log("loginOK: " + rsp.rlt);
+                isLogined = true;
 
-            if (lpcb) {
-                lpcb(false, 100, "登录成功");
+                if (lpcb) {
+                    lpcb(false, progress, "用户" + username +"登录成功");
+                }
+            }else{
+                return loginKO(rsp);
             }
-            return rsp.data;
         }
         function loginKO(rsp) {
-            logger.error("loginKO: " + rsp.data);
+            logger.error("loginKO: " + rsp);
             if (lpcb) {
-                lpcb(false, 40, "登录失败");
+                lpcb(false, progress, "用户" + username +"登录失败");
             }
-            return $q.reject(rsp.data);
+            return $q.reject(rsp);
+        }
+    }
+    
+    
+    function retrieveNEs() {
+        var progress=60;
+        if (lpcb) {
+            lpcb(true, progress, "获取网元列表...");
+        }
+
+
+        return $http.post('/retrieve_nes',{})
+            .then(OK)
+            .catch(KO);
+
+
+        function OK(rsp) {
+            if (rsp.rlt.toLowerCase() == "ok") {
+                logger.log("retrieveNEsOK");
+                if (lpcb) {
+                    lpcb(false, progress, "获取网元列表成功");
+                }
+            }else{
+                return KO(rsp);
+            }
+        }
+        function KO(rsp) {
+            logger.error("retrieveNEsKO");
+            if (lpcb) {
+                lpcb(false, progress, "获取网元列表失败");
+            }
+            return $q.reject(rsp);
         }
     }
 
@@ -91,9 +127,9 @@ function loginService($http, $q, $timeout, logger) {
     function loginStep5() {
         return loginStep("获取告警统计", 1000, 90, 99, true);
     }
-    
-    
-    function loginStep(info, dur, startp, endp, ok){
+
+
+    function loginStep(info, dur, startp, endp, ok) {
         if (lpcb) {
             lpcb(true, endp, info);
         }
@@ -114,8 +150,8 @@ function loginService($http, $q, $timeout, logger) {
     function step(stepname, dur, ok) {
         var defer = $q.defer();
         $timeout(function () {
-            if(ok) defer.resolve(stepname + " 成功.")
-            else defer.reject(stepname+" 失败.");
+            if (ok) defer.resolve(stepname + " 成功.")
+            else defer.reject(stepname + " 失败.");
 
         }, dur);
         return defer.promise;
